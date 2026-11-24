@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZZC_LEAVE_HDR'
+@MappingRole: true
+define role ZZC_LEAVE_HDR {
+  grant select on ZZC_LEAVE_HDR
+  where INHERITING CONDITIONS FROM ENTITY ZZR_LEAVE_HDR REPLACING { ROOT WITH _BaseEntity };
+}

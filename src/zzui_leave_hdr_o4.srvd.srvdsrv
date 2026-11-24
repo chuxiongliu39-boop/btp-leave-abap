@@ -1,0 +1,13 @@
+@EndUserText: {
+  label: 'Service Definition for ZZC_LEAVE_HDR'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZZC_LEAVE_HDR'
+  }
+}
+define service ZZUI_LEAVE_HDR_O4
+  provider contracts odata_v4_ui {
+  expose ZZC_LEAVE_HDR  as LeaveHdr;
+  expose ZZC_LEAVE_ITEM as LeaveItem;
+}

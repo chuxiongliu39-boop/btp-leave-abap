@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZZR_LEAVE_HDR'
+@MappingRole: true
+define role ZZR_LEAVE_HDR {
+  grant select on ZZR_LEAVE_HDR
+  where TRUE;
+}

@@ -1,0 +1,146 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.title.value: 'LeaveID'
+@UI.headerInfo.description.type: #STANDARD
+@UI.headerInfo.description.value: 'ApplicantName'
+annotate view ZZC_LEAVE_HDR with
+{
+//  @UI.facet: [{
+//    label: 'General Information',
+//    id: 'GeneralInfo',
+//    purpose: #STANDARD,
+//    position: 10,
+//    type: #IDENTIFICATION_REFERENCE
+//  }]
+// 对象页分面：原来只有「基本信息」表单；新增明细表引用 Composition _LeaveItem
+@UI.facet: [
+  {
+    label: 'General Information',
+    id: 'GeneralInfo',
+    purpose: #STANDARD,
+    position: 10,
+    type: #IDENTIFICATION_REFERENCE   // 头字段表单（原有）
+  },
+  {
+    label: 'Leave Items',
+    id: 'LeaveItem',
+    purpose: #STANDARD,
+    position: 20,
+    type: #LINEITEM_REFERENCE,        // 对象页上画子实体表格
+    targetElement: '_LeaveItem'       // 必须 = 头投影/CDS 的 composition 别名
+  }
+]
+  @EndUserText.label: 'LeaveUUID'
+  @UI.identification: [
+    { position: 10 },
+    { type: #FOR_ACTION, dataAction: 'startSbpa', label: 'Start SBPA' }
+  ]
+  @UI.lineItem: [{ position: 10, label: 'LeaveUUID' }]
+  @UI.selectionField: [{ position: 10 }]
+  LeaveUUID;
+
+  @EndUserText.label: 'LeaveID'
+  @UI.identification: [{ position: 20, label: 'LeaveID' }]
+  @UI.lineItem: [{ position: 20, label: 'LeaveID' }]
+  @UI.selectionField: [{ position: 20 }]
+  LeaveID;
+
+  @EndUserText.label: 'Applicant'
+  @UI.identification: [{ position: 30, label: 'Applicant' }]
+  @UI.lineItem: [{ position: 30, label: 'Applicant' }]
+  @UI.selectionField: [{ position: 30 }]
+  Applicant;
+
+  @EndUserText.label: 'ApplicantName'
+  @UI.identification: [{ position: 40, label: 'ApplicantName' }]
+  @UI.lineItem: [{ position: 40, label: 'ApplicantName' }]
+  @UI.selectionField: [{ position: 40 }]
+  ApplicantName;
+
+  @EndUserText.label: 'StartDate'
+  @UI.identification: [{ position: 50, label: 'StartDate' }]
+  @UI.lineItem: [{ position: 50, label: 'StartDate' }]
+  @UI.selectionField: [{ position: 50 }]
+  StartDate;
+
+  @EndUserText.label: 'EndDate'
+  @UI.identification: [{ position: 60, label: 'EndDate' }]
+  @UI.lineItem: [{ position: 60, label: 'EndDate' }]
+  @UI.selectionField: [{ position: 60 }]
+  EndDate;
+
+  @EndUserText.label: 'LeaveDays'
+  @UI.identification: [{ position: 70, label: 'LeaveDays' }]
+  @UI.lineItem: [{ position: 70, label: 'LeaveDays' }]
+  @UI.selectionField: [{ position: 70 }]
+  LeaveDays;
+
+  @EndUserText.label: 'Leave Category'
+  @UI.identification: [{ position: 80, label: 'Leave Category' }]
+  @UI.lineItem: [{ position: 80, label: 'Leave Category' }]
+  @UI.selectionField: [{ position: 80 }]
+  @Consumption.valueHelpDefinition: [{
+  entity: { name: 'ZI_LeaveCategoryVH', element: 'LeaveCategory' }
+}]
+  LeaveCategory;
+
+  @EndUserText.label: 'LeaveType'
+  @UI.identification: [{ position: 90, label: 'LeaveType' }]
+  @UI.lineItem: [{ position: 90, label: 'LeaveType' }]
+  @UI.selectionField: [{ position: 90 }]
+@Consumption.valueHelpDefinition: [{
+  entity: { name: 'ZI_LeaveTypeVH_Dep', element: 'LeaveType' },
+  additionalBinding: [{
+    localElement: 'LeaveCategory',
+    element: 'LeaveCategory',
+    usage: #FILTER
+  }]
+}]
+//  @Consumption.valueHelpDefinition: [{
+//    entity: { name: 'ZI_LeaveTypeVH', element: 'LeaveType' }
+//  }]
+  LeaveType;
+
+  @EndUserText.label: 'Reason'
+  @UI.identification: [{ position: 100, label: 'Reason' }]
+  @UI.lineItem: [{ position: 100, label: 'Reason' }]
+  @UI.selectionField: [{ position: 100 }]
+  Reason;
+
+  @EndUserText.label: 'Status'
+  @UI.identification: [{ position: 110, label: 'Status' }]
+  @UI.lineItem: [{ position: 110, label: 'Status' }]
+  @UI.selectionField: [{ position: 110 }]
+  Status;
+
+  @EndUserText.label: 'Approver'
+  @UI.identification: [{ position: 120, label: 'Approver' }]
+  @UI.lineItem: [{ position: 120, label: 'Approver' }]
+  @UI.selectionField: [{ position: 120 }]
+  Approver;
+
+  @UI.identification: [{ position: 130 }]
+  @UI.lineItem: [{ position: 130 }]
+  @UI.selectionField: [{ position: 130 }]
+  CreatedBy;
+
+  @UI.identification: [{ position: 140 }]
+  @UI.lineItem: [{ position: 140 }]
+  @UI.selectionField: [{ position: 140 }]
+  CreatedAt;
+
+  @UI.identification: [{ position: 150 }]
+  @UI.lineItem: [{ position: 150 }]
+  @UI.selectionField: [{ position: 150 }]
+  LastChangedBy;
+
+  @UI.identification: [{ position: 160 }]
+  @UI.lineItem: [{ position: 160 }]
+  @UI.selectionField: [{ position: 160 }]
+  LastChangedAt;
+
+  @UI.identification: [{ position: 170 }]
+  @UI.lineItem: [{ position: 170 }]
+  @UI.selectionField: [{ position: 170 }]
+  LocalLastChangedAt;
+}

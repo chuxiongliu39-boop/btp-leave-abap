@@ -1,0 +1,101 @@
+managed implementation in class ZZBP_R_LEAVE_HDR unique;
+strict ( 2 );
+with draft;
+extensible;
+
+define behavior for ZZR_LEAVE_HDR alias LeaveHdr
+persistent table ZLEAVE_HDR
+extensible
+draft table ZZLEAVE_HDR_D
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master( global )
+{
+  field ( readonly )
+   LeaveUUID,
+   CreatedBy,
+   CreatedAt,
+   LastChangedBy,
+   LastChangedAt,
+   LocalLastChangedAt;
+
+  field ( numbering : managed )
+   LeaveUUID;
+
+  create;
+  update;
+  delete;
+
+  association _LeaveItem { create; }
+
+  action startSbpa result [1] $self;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+  determination CalculateLeaveDays on modify
+{
+  field StartDate, EndDate;
+}
+side effects
+{
+  field StartDate affects field LeaveDays;
+  field EndDate   affects field LeaveDays;
+}
+validation ValidateDates on save
+{
+  create;
+  update;
+}
+
+  mapping for ZLEAVE_HDR corresponding extensible
+  {
+    LeaveUUID = LEAVE_UUID;
+    LeaveID = LEAVE_ID;
+    Applicant = APPLICANT;
+    ApplicantName = APPLICANT_NAME;
+    StartDate = START_DATE;
+    EndDate = END_DATE;
+    LeaveDays = LEAVE_DAYS;
+    LeaveCategory = LEAVE_CATEGORY;
+    LeaveType = LEAVE_TYPE;
+    Reason = REASON;
+    Status = STATUS;
+    Approver = APPROVER;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+}
+
+define behavior for ZZR_LEAVE_ITEM alias LeaveItem
+persistent table zleave_item
+draft table ZZLEAVE_ITEM_D
+lock dependent by _LeaveHdr
+authorization dependent by _LeaveHdr
+{
+
+  update;
+  delete;
+
+  field ( readonly )
+    ItemUUID,
+    LeaveUUID;
+
+  field ( numbering : managed )
+    ItemUUID;
+
+  association _LeaveHdr;
+
+  mapping for zleave_item
+  {
+    ItemUUID = item_uuid;
+    LeaveUUID = leave_uuid;
+    ItemNo = item_no;
+    Description = description;
+  }
+}

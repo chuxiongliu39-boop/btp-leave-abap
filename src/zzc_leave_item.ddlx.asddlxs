@@ -1,0 +1,8 @@
+@Metadata.layer: #CORE
+annotate view ZZC_LEAVE_ITEM with
+{
+  @UI.lineItem: [{ position: 10, label: 'Item No' }]
+  ItemNo;
+  @UI.lineItem: [{ position: 20, label: 'Description' }]
+  Description;
+}
