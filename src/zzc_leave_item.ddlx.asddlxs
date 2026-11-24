@@ -1,8 +1,29 @@
 @Metadata.layer: #CORE
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.title.value: 'ItemNo'
 annotate view ZZC_LEAVE_ITEM with
 {
+  @UI.facet: [
+    {
+      label: 'General Information',
+      id: 'GeneralInfo',
+      purpose: #STANDARD,
+      position: 10,
+      type: #IDENTIFICATION_REFERENCE
+    }
+  ]
+
+  @UI.hidden: true
+  ItemUuid;
+
+  @UI.hidden: true
+  LeaveUuid;
+
   @UI.lineItem: [{ position: 10, label: 'Item No' }]
+  @UI.identification: [{ position: 10, label: 'Item No' }]
   ItemNo;
+
   @UI.lineItem: [{ position: 20, label: 'Description' }]
+  @UI.identification: [{ position: 20, label: 'Description' }]
   Description;
 }
