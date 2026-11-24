@@ -19,4 +19,11 @@ use etag
 //  use determination CalculateLeaveDays;
 //  use validation ValidateDates;
 
+  use association _LeaveItem { create; with draft; }
+}
+
+define behavior for ZZC_LEAVE_ITEM alias LeaveItem
+{
+  use update;
+  use delete;
 }

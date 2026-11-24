@@ -26,7 +26,7 @@ authorization master( global )
   update;
   delete;
 
-  association _LeaveItem { create; }
+  association _LeaveItem { create; with draft; }
 
   action startSbpa result [1] $self;
   draft action Activate optimized;
