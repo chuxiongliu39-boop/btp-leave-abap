@@ -26,4 +26,6 @@ define behavior for ZZC_LEAVE_ITEM alias LeaveItem
 {
   use update;
   use delete;
+
+  use association _LeaveHdr;
 }
