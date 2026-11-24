@@ -6,6 +6,9 @@ CLASS zcl_leave_start_sbpa DEFINITION
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
 
+    " [Agent履历] 2026-11-24 | Cursor Agent
+    " 变更: start_leave / post_workflow 增加 iv_approver，JSON context 增加 approver
+    " 原因: Fiori Approver 需传给 SBPA 作为审批人
     CLASS-METHODS start_leave
       IMPORTING
         iv_applicant  TYPE string
@@ -14,7 +17,7 @@ CLASS zcl_leave_start_sbpa DEFINITION
         iv_leave_days TYPE string
         iv_leave_type TYPE string
         iv_reason     TYPE string
-        iv_approver   TYPE string
+        iv_approver   TYPE string " [Agent履历] 2026-11-24 新增
       EXPORTING
         ev_status TYPE i
       RAISING
@@ -44,7 +47,7 @@ CLASS zcl_leave_start_sbpa DEFINITION
         iv_leave_days TYPE string
         iv_leave_type TYPE string
         iv_reason     TYPE string
-        iv_approver   TYPE string
+        iv_approver   TYPE string " [Agent履历] 2026-11-24 新增
       EXPORTING
         ev_status TYPE i
         ev_body   TYPE string
@@ -74,7 +77,7 @@ CLASS ZCL_LEAVE_START_SBPA IMPLEMENTATION.
             iv_leave_days = '2'
             iv_leave_type = 'ANNUAL'
             iv_reason     = 'Mode B'
-            iv_approver   = '1397975119@qq.com'
+            iv_approver   = '1397975119@qq.com' " [Agent履历] 2026-11-24 main 试跑样例
           IMPORTING
             ev_status = lv_code
             ev_body   = lv_body ).
@@ -98,7 +101,7 @@ CLASS ZCL_LEAVE_START_SBPA IMPLEMENTATION.
         iv_leave_days = iv_leave_days
         iv_leave_type = iv_leave_type
         iv_reason     = iv_reason
-        iv_approver   = iv_approver
+        iv_approver   = iv_approver " [Agent履历] 2026-11-24 透传 Approver
       IMPORTING
         ev_status = ev_status ).
   ENDMETHOD.
@@ -153,6 +156,7 @@ CLASS ZCL_LEAVE_START_SBPA IMPLEMENTATION.
       |"leaveDays":{ iv_leave_days },| &&
       |"leaveType":"{ iv_leave_type }",| &&
       |"reason":"{ iv_reason }",| &&
+      " [Agent履历] 2026-11-24 context 增加 approver，供 SBPA 流程绑定审批人
       |"approver":"{ iv_approver }"\}\}|.
 
     lo_req->set_text( lv_body ).

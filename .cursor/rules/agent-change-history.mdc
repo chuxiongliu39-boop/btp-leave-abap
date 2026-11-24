@@ -1,0 +1,27 @@
+---
+description: Agent 改动必须加带履历的注释
+alwaysApply: true
+---
+
+# Agent 改动履历注释
+
+凡由 Cursor Agent 触发的代码/配置改动，必须在改动处留下**履历注释**，便于 ADT/abapGit 回看。
+
+## 格式
+
+```
+[Agent履历] YYYY-MM-DD | Cursor Agent
+变更: <做了什么>
+原因: <为什么改>
+```
+
+- ABAP：用 `"` 行注释（可写在方法/参数旁）
+- CDS / BDEF / MDE / Service：用 `//`
+- XML（tabl 等）：用 `<!-- ... -->`（若该格式允许）或在邻近可注释源文件中说明
+
+## 要求
+
+1. 新参数、新字段、行为变更、关键逻辑处都要留履历，不只写在 commit message
+2. 同一处后续再改：在原履历下**追加**一行，不要删旧履历
+3. 纯格式化、重命名无关的机械改动可省略履历
+4. commit / push 仍照常；履历注释是源码内痕迹，与 git log 互补

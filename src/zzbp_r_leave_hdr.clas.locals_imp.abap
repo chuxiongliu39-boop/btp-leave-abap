@@ -27,6 +27,9 @@ CLASS LHC_ZZR_LEAVE_HDR IMPLEMENTATION.
   LOOP AT lt_leave ASSIGNING FIELD-SYMBOL(<leave>).
     TRY.
         DATA lv_http TYPE i.
+" [Agent履历] 2026-11-24 | Cursor Agent
+" 变更: startSbpa 增加 iv_approver = LeaveHdr-Approver
+" 原因: 将单据审批人传给 SBPA workflow context
 zcl_leave_start_sbpa=>start_leave(
   EXPORTING
     iv_applicant  = CONV string( <leave>-Applicant )
@@ -35,7 +38,7 @@ zcl_leave_start_sbpa=>start_leave(
     iv_leave_days = |{ <leave>-LeaveDays }|
     iv_leave_type = CONV string( <leave>-LeaveType )
     iv_reason     = CONV string( <leave>-Reason )
-    iv_approver   = CONV string( <leave>-Approver )
+    iv_approver   = CONV string( <leave>-Approver ) " [Agent履历] 2026-11-24 新增
   IMPORTING
     ev_status = lv_http ).
         IF lv_http <> 201.
